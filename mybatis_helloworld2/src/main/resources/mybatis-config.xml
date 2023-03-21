@@ -3,9 +3,48 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>   <!-- configuration -->
-    <!-- environments -->
+    <!-- environments  配置连接数据库的环境
+         default: 默认使用的环境
+    -->
+<!--     引入properties文件，此后可以在当前文件中以${key}的方式访问value值-->
+    <properties resource="jdbc.properties"/>
+<!-- 为类型设置一个别名 可以在xml文件中直接使用哦-->
+    <typeAliases>
+<!--        type起别名的类型，  alias:设置某个类型的别名 -->
+<!--       不设置alias 则默认为类名，且不区分大小写 -->
+<!--        <typeAlias type="com.atguigu.mybatis.pojo.User" ></typeAlias>-->
+<!--        package-->
+        <package name="com.atguigu.mybatis.pojo"/>
+    </typeAliases>
+
+
     <environments default="development">
+
+<!--    id 唯一的标识,不能重复.-->
         <environment id="development">
+<!--
+transactionManager：设置事务管理方式
+属性：
+type="JDBC|MANAGED"
+JDBC：表示当前环境中，执行SQL时，使用的是JDBC中原生的事务管理方式，事
+务的提交或回滚需要手动处理  ;
+MANAGED：被管理，例如Spring
+-->
+            <transactionManager type="JDBC"/>
+<!--          type :    设置数据源的类型
+             type ="POOLED|UNPOOLED|JNDI"
+             POOLED:使用数据库连接池
+             UNPOOLED:不使用数据库连接池
+             JNDI:使用上下文中的数据源
+        -->
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+        <environment id="test">
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
@@ -16,8 +55,17 @@
         </environment>
     </environments>
      <!-- 引入mybatis 的映射文件 -->
+
+
+
     <mappers>
-        <mapper resource="mappers/UserMapper.xml"/>
+<!--        <mapper resource="mappers/UserMapper.xml"/>-->
+<!--        以包的方式引入映射文件
+            1 mapper  接口和映射的文件所在的包必须一致
+            2 mapper 接口的名字和映射文件的名字必须一致
+        -->
+        <package name="com.atguigu.mybatis.mapper"/>
     </mappers>
+
 
 </configuration>

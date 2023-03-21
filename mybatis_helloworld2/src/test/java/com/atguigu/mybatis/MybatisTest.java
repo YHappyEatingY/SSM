@@ -1,6 +1,7 @@
 package com.atguigu.mybatis;
 
 import com.atguigu.mybatis.mapper.UserMapper;
+import com.atguigu.mybatis.pojo.User;
 import com.atguigu.mybatis.utils.SqlSessionUtil;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -10,6 +11,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * @author Happy Day !
@@ -67,6 +69,42 @@ public class MybatisTest {
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
         userMapper.deleteUser();
         SqlSessionUtil.closeSqlSession(SqlSessionUtil.sqlSession_is_alive());
+    }
+     @Test
+    public void test4() throws IOException {
+        /*// 获取核心文件的输入流
+        InputStream resourceAsStream = Resources.getResourceAsStream("mybatis-config.xml");
+       // 获取sqlSessionFactoryBuilder 对象
+        SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();
+        // 获取sqlSessionFactory 对象
+        SqlSessionFactory build = sqlSessionFactoryBuilder.build(resourceAsStream);
+        // 获取sql的sqlSession对象 是Mybatis提供操作数据库的对象
+        SqlSession sqlSession = build.openSession(true);
+        // 获取UserMapper的代理实现类对象
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);*/
+        SqlSession sqlSession = SqlSessionUtil.getSqlSession();
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        User userById = userMapper.getUserById();
+        System.out.println(userById);
+        SqlSessionUtil.closeSqlSession(SqlSessionUtil.sqlSession_is_alive());
 
+    }
+    @Test
+    public void test5() throws IOException {
+        /*// 获取核心文件的输入流
+        InputStream resourceAsStream = Resources.getResourceAsStream("mybatis-config.xml");
+       // 获取sqlSessionFactoryBuilder 对象
+        SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();
+        // 获取sqlSessionFactory 对象
+        SqlSessionFactory build = sqlSessionFactoryBuilder.build(resourceAsStream);
+        // 获取sql的sqlSession对象 是Mybatis提供操作数据库的对象
+        SqlSession sqlSession = build.openSession(true);
+        // 获取UserMapper的代理实现类对象
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);*/
+        SqlSession sqlSession = SqlSessionUtil.getSqlSession();
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        List<User> allUser = userMapper.getAllUser();
+        System.out.println(allUser);
+        SqlSessionUtil.closeSqlSession(SqlSessionUtil.sqlSession_is_alive());
     }
 }

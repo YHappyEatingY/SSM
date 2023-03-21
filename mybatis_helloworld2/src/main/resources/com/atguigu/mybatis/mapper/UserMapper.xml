@@ -18,4 +18,16 @@
     <delete id="deleteUser">
         delete from t_user where id = 1 ;
     </delete>
+<!--    resultType :设置类型, 即查询的数据转化为java类型
+        resultMap:自定映射，处理一对多或多对一的映射;
+ -->
+    <select id="getUserById" resultType="User" >
+        select * from t_user where id = 2;
+    </select>
+
+    <select id="getAllUser" resultType="User">
+        select * from t_user;
+    </select>
+
+
 </mapper>
