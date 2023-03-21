@@ -67,5 +67,6 @@ public class MybatisTest {
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
         userMapper.deleteUser();
         SqlSessionUtil.closeSqlSession(SqlSessionUtil.sqlSession_is_alive());
+
     }
 }
